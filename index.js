@@ -14,12 +14,16 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try{
-
+        await client.connect();
+        const collection = client.db("notesTaker").collection("notes");
+        console.log("conenct to DB");
     }finally{
 
     }
+    
+}
 
-}   
+run().catch(console.dir)
 // client.connect(err => {
 //   const collection = client.db("test").collection("devices");
 //   // perform actions on the collection object
