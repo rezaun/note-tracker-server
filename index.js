@@ -5,6 +5,8 @@ const port = 5000;
 //kabir
 //EQhyVdLq5Aefww9G
 
+app.use(cors());
+app.use(express.json());
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -15,8 +17,34 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try{
         await client.connect();
-        const collection = client.db("notesTaker").collection("notes");
-        console.log("conenct to DB");
+        const notesCollection = client.db("notesTaker").collection("notes");
+        
+
+        //Get api to read all notes
+
+        app.get('/notes', async(req,res) =>{
+
+            const q = req.query;
+            console.log(q);
+
+            const cursor = notesCollection.find({});
+            const result = await cursor.toArray();
+
+            res.send(result);
+        })
+
+
+        //create NotesTaker
+        app.post('/note', async(req,res)=>{
+            const data = req.body;
+            console.log(data);
+            res.send("Hello from post api")
+        })
+
+        //update NotesTaker
+
+
+        //Delete Note
     }finally{
 
     }
