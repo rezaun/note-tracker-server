@@ -22,6 +22,7 @@ async function run() {
         
 
         //Get api to read all notes
+        //localhost:5000/notes
 
         app.get('/notes', async(req,res) =>{
 
@@ -36,6 +37,7 @@ async function run() {
 
 
         //create NotesTaker
+        //localhost:5000/note
         app.post('/note', async(req,res)=>{
             const data = req.body;
             console.log(data);
@@ -45,6 +47,7 @@ async function run() {
         })
 
         //update NotesTaker
+        //http://localhost:5000/note/62eec158a23a038ee2ce4621
         app.put('/note/:id', async(req, res) =>{
             const id = req.params.id;
             const data = req.body;
@@ -62,7 +65,17 @@ async function run() {
           const result = await notesCollection.updateOne(filter, updateDoc, options);
           res.send(result);
         });
+
         //Delete Note
+        //http://localhost:5000/note/62eec158a23a038ee2ce4621
+        app.delete('/note/:id', async(req,res)=>{
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+
+            const result = await notesCollection.deleteOne(filter);
+
+            res.send(result);
+        })
     }finally{
 
     }
