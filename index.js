@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = 5000;
+const cors = require("cors");
 
 //kabir
 //EQhyVdLq5Aefww9G
@@ -38,7 +39,9 @@ async function run() {
         app.post('/note', async(req,res)=>{
             const data = req.body;
             console.log(data);
-            res.send("Hello from post api")
+
+            const result = await notesCollection.insertOne(data);
+            res.send(result);
         })
 
         //update NotesTaker
